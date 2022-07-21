@@ -1,0 +1,14 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@if(User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <a asp-page="TodoItemsPage" class="btn btn-primary">Zobacz swoje zadania</a>    
+}else
+{
+    <p>Zaloguj się aby móc zarządzać zadaniami</p>
+}
+

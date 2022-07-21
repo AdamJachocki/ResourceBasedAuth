@@ -1,0 +1,57 @@
+﻿@page
+@model WebApp.Pages.TodoItemsPageModel
+
+<h1>Twoje zadania</h1>
+
+<div class="row">
+    <div class="col-2"><a asp-page="TodoItemAddPage" class="btn btn-primary">Nowe zadanie</a></div>
+</div>
+
+<hr />
+
+@if(Model.Items.Count() > 0)
+{
+    <form method="post" asp-page-handler="delete" id="main-form">
+        <input type="hidden" id="del-input-id" name="id" value="" />
+    
+
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <td>Id zadania</td>
+                    <td>Tytuł zadania</td>
+                    <td>Czy zrobione</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@(item.Done ? "++ TAK ++" : "-- NIE --")</td>
+                        <td>
+                            <a asp-page="TodoItemAddPage" asp-page-handler="edit" asp-route-id="@item.Id"><span class="material-icons">edit</span></a>
+                            &nbsp;
+                            <a href="javascript:deleteItem(@item.Id);"><span class="material-icons">delete</span></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>    
+    </form>
+
+    <script>
+        function deleteItem(id) {
+            let input = document.getElementById("del-input-id");
+            input.value = id;
+
+            let form = document.getElementById("main-form");
+            form.submit();
+        }
+    </script>
+}
+
+
+
